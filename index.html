@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Baccarat Pattern A/B</title>
+
+<style>
+
+/* ===== HEADER ===== */
+.headerBar{
+    width:1100px;
+    margin:0 auto 20px auto;
+    text-align:left;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-size:28px;
+    font-weight:700;
+    letter-spacing:1px;
+    background:linear-gradient(90deg,#FFD700,#fff,#FFD700);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.logoBot{
+    height:80px;
+    width:auto;
+    filter:
+        drop-shadow(0 0 10px rgba(255,215,0,.6))
+        drop-shadow(0 0 20px rgba(59,130,246,.4));
+    transition:.3s ease;
+}
+
+.logoBot:hover{
+    transform:scale(1.08);
+}
+
+.tagline{
+    font-size:13px;
+    opacity:.6;
+    letter-spacing:2px;
+}
+
+
+
+@keyframes floatBot{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-4px);}
+    100%{transform:translateY(0);}
+}
+
+/* ===== MAIN LAYOUT ===== */
+.mainWrap{
+    width:1100px;
+    margin:0 auto;
+}
+
+.topGrid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:16px;
+}
+
+.roadSection{
+    margin-top:20px;
+}
+
+/* ===== Upgrade State Box ===== */
+#stateBox{
+    padding:18px;
+    border-radius:20px;
+}
+
+#assistant50{
+    padding:18px;
+    border-radius:20px;
+}
+
+/* ===== DNA Card Upgrade ===== */
+.dna-row{
+    width:240px;
+    padding:14px;
+    border-radius:18px;
+}
+
+.dna-row.best{
+    box-shadow:
+        0 0 25px rgba(255,215,0,.3),
+        0 0 60px rgba(255,215,0,.15);
+    transform:scale(1.04);
+}
+
+/* ===== Canvas Glow ===== */
+canvas{
+    transition:.3s;
+}
+
+canvas:hover{
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.9),
+        0 0 30px rgba(59,130,246,.2);
+}
+
+/* ===== Buttons Premium Glow ===== */
+.btnP:hover{
+    box-shadow:0 10px 30px rgba(59,130,246,.6);
+}
+
+.btnB:hover{
+    box-shadow:0 10px 30px rgba(239,68,68,.6);
+}
+
+/* ===== Glass Depth ===== */
+body::before{
+    content:"";
+    position:fixed;
+    width:800px;
+    height:800px;
+    background:radial-gradient(circle,rgba(255,215,0,.08),transparent 60%);
+    top:-200px;
+    right:-200px;
+    pointer-events:none;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root{
+    --bg: radial-gradient(circle at top,#111827,#05070d 70%);
+    --panel: rgba(20,25,35,.75);
+    --glass: backdrop-filter: blur(12px);
+    --gold:#FFD700;
+    --blue:#3b82f6;
+    --red:#ef4444;
+    --green:#22c55e;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:#fff;
+    text-align:center;
+    margin:0;
+    padding:20px;
+}
+
+/* ===== Premium Card ===== */
+#stateBox,
+#assistant50,
+.dna-row{
+    background:var(--panel);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(14px);
+    border-radius:16px;
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.6),
+        inset 0 0 0 1px rgba(255,255,255,.05);
+    transition:.3s ease;
+}
+
+#stateBox:hover{
+    transform:translateY(-3px);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.8),
+        0 0 25px rgba(255,215,0,.2);
+}
+
+/* ===== Premium Buttons ===== */
+button{
+    padding:10px 18px;
+    margin:6px;
+    border-radius:10px;
+    border:none;
+    font-weight:600;
+    letter-spacing:.5px;
+    transition:.25s;
+    cursor:pointer;
+}
+
+.btnP{
+    background:linear-gradient(135deg,#1e40af,#3b82f6);
+    color:#fff;
+}
+.btnB{
+    background:linear-gradient(135deg,#991b1b,#ef4444);
+    color:#fff;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 20px rgba(0,0,0,.6);
+}
+
+button:active{
+    transform:scale(.97);
+}
+
+canvas{
+    background:#0b0f1a;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 10px 30px rgba(0,0,0,.7);
+}
+
+#aiAccuracy{
+    font-weight:700;
+    color:var(--gold);
+}
+
+#aiAdvice{
+    font-size:17px;
+    color:var(--gold);
+    text-shadow:0 0 8px rgba(255,215,0,.4);
+}
+
+.best{
+    background:linear-gradient(135deg,rgba(255,215,0,.2),rgba(255,215,0,.05));
+    border:1px solid rgba(255,215,0,.4);
+}
+
+.aiWin{
+    width:24px;
+    height:24px;
+    border-radius:6px;
+    background:var(--green);
+    box-shadow:0 0 10px rgba(34,197,94,.6);
+}
+.aiLose{
+    width:24px;
+    height:24px;
+    border-radius:6px;
+    background:var(--red);
+    box-shadow:0 0 10px rgba(239,68,68,.6);
+}
+
+#expiredScreen{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(180deg,#000,#111);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    font-size:22px;
+    color:#fff;
+    text-align:center;
+    z-index:9999;
+}
+
+/* ===== Layout Control ===== */
+#stateBox{
+    width:900px;
+    margin:10px auto;
+    padding:12px;
+}
+
+/* ===== DNA Layout Horizontal ===== */
+.dna{
+    width:900px;
+    margin:10px auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    justify-content:center;
+}
+
+.dna-row{
+    width:210px;
+    padding:10px;
+}
+
+.dna-head{
+    display:flex;
+    justify-content:space-between;
+    font-weight:600;
+    margin-bottom:6px;
+}
+
+.dna-marks{
+    display:grid;
+    grid-template-columns: repeat(20, 1fr); /* 🔥 20 ช่องต่อแถว */
+    gap:4px;
+}
+
+.mark{
+    width:22px;
+    height:22px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:6px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.mark.win{
+    background:#22c55e;
+}
+
+.mark.lose{
+    background:#ef4444;
+}
+
+
+
+#assistant50{
+    width:900px;
+    margin:6px auto;
+    padding:12px;
+    display:none;
+}
+
+
+#labOutput{
+    transition: opacity .3s ease;
+}
+
+/* ===== PREMIUM UI UPGRADE ===== */
+
+body{
+    background:
+        radial-gradient(circle at 20% 10%, rgba(59,130,246,.15), transparent 40%),
+        radial-gradient(circle at 80% 0%, rgba(255,215,0,.12), transparent 40%),
+        linear-gradient(180deg,#05070d,#02030a);
+}
+
+/* ===== TITLE GLOW ===== */
+.titleGlow{
+    font-size:20px;
+    letter-spacing:2px;
+    margin:14px 0 6px;
+    background:linear-gradient(90deg,#FFD700,#ffffff,#FFD700);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer{
+    0%{background-position:-200px;}
+    100%{background-position:200px;}
+}
+
+/* ===== MAIN CANVAS (BEAD) ===== */
+.mainCanvas{
+    border-radius:18px;
+    background:linear-gradient(180deg,#05070d,#0a0f1f);
+    border:1px solid rgba(255,255,255,.06);
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.9),
+        inset 0 0 30px rgba(59,130,246,.08);
+    transition:.35s;
+}
+
+.mainCanvas:hover{
+    transform:translateY(-4px) scale(1.01);
+    box-shadow:
+        0 35px 100px rgba(0,0,0,1),
+        0 0 40px rgba(59,130,246,.25);
+}
+
+/* ===== FLOAT EFFECT ===== */
+@keyframes floatSoft{
+    0%{transform:translateY(0)}
+    50%{transform:translateY(-3px)}
+    100%{transform:translateY(0)}
+}
+
+#stateBox, #assistant50{
+    animation: floatSoft 4s ease-in-out infinite;
+}
+
+/* ===== DNA CARD ULTRA PREMIUM ===== */
+.dna-row{
+    background:
+        linear-gradient(180deg,rgba(20,25,40,.9),rgba(5,8,20,.9));
+    border:1px solid rgba(255,255,255,.06);
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.8),
+        inset 0 0 10px rgba(255,255,255,.03);
+    transition:.3s;
+}
+
+.dna-row:hover{
+    transform:translateY(-4px) scale(1.02);
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.95),
+        0 0 20px rgba(59,130,246,.2);
+}
+
+/* ===== BEST CARD GOLD ===== */
+.dna-row.best{
+    background:
+        linear-gradient(135deg,rgba(255,215,0,.15),rgba(255,215,0,.03));
+    border:1px solid rgba(255,215,0,.5);
+    box-shadow:
+        0 0 30px rgba(255,215,0,.25),
+        0 0 80px rgba(255,215,0,.15);
+}
+
+/* ===== BUTTON LUXURY ===== */
+button{
+    backdrop-filter: blur(6px);
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.btnP{
+    background:linear-gradient(135deg,#1e3a8a,#3b82f6);
+}
+
+.btnB{
+    background:linear-gradient(135deg,#7f1d1d,#ef4444);
+}
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.7),
+        0 0 20px rgba(59,130,246,.25);
+}
+
+/* ===== AI GLOW TEXT ===== */
+#aiBet{
+    font-size:20px;
+    color:#FFD700;
+    text-shadow:
+        0 0 10px rgba(255,215,0,.6),
+        0 0 20px rgba(255,215,0,.3);
+}
+
+/* ===== AI LOG ANIMATION ===== */
+.aiWin, .aiLose{
+    animation: popIn .3s ease;
+}
+
+@keyframes popIn{
+    from{transform:scale(.5);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+}
+
+/* ===== BACKGROUND PARTICLE LIGHT ===== */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,.04), transparent 40%),
+        radial-gradient(circle at 70% 80%, rgba(59,130,246,.05), transparent 40%);
+    pointer-events:none;
+}
+
+/* ===== PREMIUM BACKGROUND V2 (สดขึ้น + หรู) ===== */
+
+body{
+    background:
+        radial-gradient(circle at 15% 20%, rgba(59,130,246,.25), transparent 45%),
+        radial-gradient(circle at 85% 15%, rgba(255,215,0,.18), transparent 45%),
+        radial-gradient(circle at 50% 90%, rgba(16,185,129,.12), transparent 50%),
+        linear-gradient(180deg,#05070d,#03040a);
+    animation: bgMove 18s ease-in-out infinite;
+}
+
+/* 🔥 เคลื่อนไหวพื้นหลัง */
+@keyframes bgMove{
+    0%{
+        background-position: 0% 0%, 100% 0%, 50% 100%;
+    }
+    50%{
+        background-position: 20% 10%, 80% 20%, 50% 80%;
+    }
+    100%{
+        background-position: 0% 0%, 100% 0%, 50% 100%;
+    }
+}
+
+/* ===== LIGHT GLOW FLOAT ===== */
+body::before{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle, rgba(255,255,255,.06), transparent 60%);
+    top:10%;
+    left:10%;
+    animation: floatLight 10s ease-in-out infinite;
+    pointer-events:none;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:radial-gradient(circle, rgba(59,130,246,.08), transparent 60%);
+    bottom:10%;
+    right:10%;
+    animation: floatLight2 14s ease-in-out infinite;
+    pointer-events:none;
+}
+
+@keyframes floatLight{
+    0%{transform:translate(0,0);}
+    50%{transform:translate(40px, -30px);}
+    100%{transform:translate(0,0);}
+}
+
+@keyframes floatLight2{
+    0%{transform:translate(0,0);}
+    50%{transform:translate(-30px, 40px);}
+    100%{transform:translate(0,0);}
+}
+
+/* ===== CANVAS GLOW ANIMATION ===== */
+.mainCanvas{
+    animation: canvasGlow 4s ease-in-out infinite;
+}
+
+@keyframes canvasGlow{
+    0%{
+        box-shadow:
+            0 20px 60px rgba(0,0,0,.9),
+            0 0 20px rgba(59,130,246,.15);
+    }
+    50%{
+        box-shadow:
+            0 30px 80px rgba(0,0,0,1),
+            0 0 40px rgba(59,130,246,.3);
+    }
+    100%{
+        box-shadow:
+            0 20px 60px rgba(0,0,0,.9),
+            0 0 20px rgba(59,130,246,.15);
+    }
+}
+
+/* ===== BUTTON PULSE ===== */
+.btnP, .btnB{
+    position:relative;
+    overflow:hidden;
+}
+
+.btnP::after, .btnB::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(120deg, transparent, rgba(255,255,255,.2), transparent);
+    transform:translateX(-100%);
+}
+
+.btnP:hover::after,
+.btnB:hover::after{
+    animation: shine 1s;
+}
+
+@keyframes shine{
+    100%{transform:translateX(100%);}
+}
+
+/* ===== AI TEXT PULSE ===== */
+#aiBet{
+    animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes glowPulse{
+    0%{
+        text-shadow:0 0 8px rgba(255,215,0,.5);
+    }
+    50%{
+        text-shadow:
+            0 0 16px rgba(255,215,0,.9),
+            0 0 30px rgba(255,215,0,.5);
+    }
+    100%{
+        text-shadow:0 0 8px rgba(255,215,0,.5);
+    }
+}
+
+/* ===== DNA CARD FLOAT ===== */
+.dna-row{
+    animation: dnaFloat 6s ease-in-out infinite;
+}
+
+@keyframes dnaFloat{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-5px);}
+    100%{transform:translateY(0);}
+}
+
+/* ===== ULTRA DEPTH BACKGROUND ===== */
+
+body{
+    background:
+        radial-gradient(circle at 10% 20%, rgba(59,130,246,.35), transparent 45%),
+        radial-gradient(circle at 85% 10%, rgba(255,215,0,.25), transparent 45%),
+        radial-gradient(circle at 50% 100%, rgba(16,185,129,.18), transparent 50%),
+        linear-gradient(180deg,#02030a,#040614 60%, #02030a);
+    background-size: 120% 120%;
+    animation: bgFlow 20s ease-in-out infinite;
+}
+
+/* 🔥 เคลื่อนไหวแบบลอยช้าๆ (ไม่เวียนหัว) */
+@keyframes bgFlow{
+    0%{
+        background-position: 0% 0%, 100% 0%, 50% 100%;
+    }
+    50%{
+        background-position: 15% 10%, 85% 15%, 50% 85%;
+    }
+    100%{
+        background-position: 0% 0%, 100% 0%, 50% 100%;
+    }
+}
+
+/* ===== LAYER แสงลอย (มิติจริง) ===== */
+body::before{
+    content:"";
+    position:fixed;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle, rgba(255,255,255,.05), transparent 60%);
+    top:-100px;
+    left:-100px;
+    animation: lightFloat1 18s ease-in-out infinite;
+    pointer-events:none;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle, rgba(59,130,246,.12), transparent 60%);
+    bottom:-100px;
+    right:-100px;
+    animation: lightFloat2 22s ease-in-out infinite;
+    pointer-events:none;
+}
+
+/* 🔥 การลอย */
+@keyframes lightFloat1{
+    0%{transform:translate(0,0);}
+    50%{transform:translate(60px,-40px);}
+    100%{transform:translate(0,0);}
+}
+
+@keyframes lightFloat2{
+    0%{transform:translate(0,0);}
+    50%{transform:translate(-50px,50px);}
+    100%{transform:translate(0,0);}
+}
+
+/* ===== เพิ่ม LAYER ลึกอีกชั้น ===== */
+.mainWrap{
+    position:relative;
+}
+
+.mainWrap::before{
+    content:"";
+    position:absolute;
+    inset:-40px;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.03), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(59,130,246,.05), transparent 60%);
+    filter: blur(40px);
+    z-index:-1;
+}
+
+/* ===== CANVAS DEPTH ENHANCE ===== */
+.mainCanvas{
+    backdrop-filter: blur(10px);
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.9),
+        inset 0 0 40px rgba(59,130,246,.12),
+        0 0 60px rgba(59,130,246,.15);
+    animation: canvasBreath 5s ease-in-out infinite;
+}
+
+@keyframes canvasBreath{
+    0%{
+        box-shadow:
+            0 25px 70px rgba(0,0,0,.9),
+            0 0 20px rgba(59,130,246,.15);
+    }
+    50%{
+        box-shadow:
+            0 35px 100px rgba(0,0,0,1),
+            0 0 50px rgba(59,130,246,.35);
+    }
+    100%{
+        box-shadow:
+            0 25px 70px rgba(0,0,0,.9),
+            0 0 20px rgba(59,130,246,.15);
+    }
+}
+
+/* ===== SOFT COLOR LIFT (ทำให้สดขึ้นแบบหรู) ===== */
+#stateBox, #assistant50{
+    background:
+        linear-gradient(180deg, rgba(25,30,50,.9), rgba(10,15,30,.9));
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.8),
+        0 0 30px rgba(59,130,246,.08);
+}
+/* ===== TEXT GLOW SOFT ===== */
+#aiAccuracy{
+    text-shadow:0 0 10px rgba(255,215,0,.4);
+}
+
+#aiAdvice{
+    text-shadow:
+        0 0 8px rgba(255,215,0,.5),
+        0 0 20px rgba(255,215,0,.2);
+    line-height:1.6;
+}
+
+#aiAdvice span.stateStat{
+    color:#22c55e;
+    font-weight:bold;
+}
+
+/* ===== BEAD CONTAINER ===== */
+.beadContainer{
+    position:relative;
+    width:960px;
+    margin:0 auto;
+}
+
+/* ===================================================== */
+/* 🔥 STATE BOX (ตัวหลักด้านบน — FIX แล้ว) */
+/* ===================================================== */
+#stateBox{
+    position:relative;        /* ✅ สำคัญ: ไม่ลอย */
+    width:900px;
+    margin:10px auto;
+    padding:12px;
+
+    opacity:.95;
+
+    backdrop-filter: blur(10px);
+    background: rgba(10,15,30,.85);
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:16px;
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.7),
+        0 0 20px rgba(59,130,246,.08);
+
+    transition:.25s;
+}
+
+#stateBox:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.9),
+        0 0 25px rgba(255,215,0,.15);
+}
+
+/* ===================================================== */
+/* 🔥 MINI STATE (ลอยบน BEAD อย่างเดียว) */
+/* ===================================================== */
+#stateMini{
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:160px;
+    padding:10px;
+
+    border-radius:12px;
+    background:rgba(10,15,30,.85);
+    backdrop-filter: blur(10px);
+
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 10px 25px rgba(0,0,0,.7);
+
+    z-index:20;
+    font-size:12px;
+    text-align:left;
+
+    transition:.25s;
+}
+
+#stateMini:hover{
+    transform:scale(1.05);
+}
+
+#stateDNAStat{
+    padding:8px 10px;
+    border-radius:10px;
+
+    background:rgba(0,0,0,.25);
+    border:1px solid rgba(255,255,255,.08);
+
+    display:inline-block;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="expiredScreen">
+    <h1></h1>
+    <h2></h2>
+</div>
+
+<div id="loginBox" style="
+position:fixed;
+inset:0;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+flex-direction:column;
+">
+
+<h2 style="margin-bottom:10px;">🔐 LOGIN</h2>
+
+<input id="user" placeholder="Username" style="
+padding:10px;
+margin:5px;
+width:200px;
+border-radius:8px;
+border:none;
+text-align:center;
+">
+
+<div style="position:relative;">
+<input id="pass" type="password" placeholder="Password" style="
+padding:10px;
+margin:5px;
+width:200px;
+border-radius:8px;
+border:none;
+text-align:center;
+">
+
+<!-- ✅ เปิดดูรหัส -->
+<label style="
+position:absolute;
+right:10px;
+top:50%;
+transform:translateY(-50%);
+display:flex;
+align-items:center;
+gap:4px;
+font-size:12px;
+color:#000;
+cursor:pointer;
+user-select:none;
+font-weight:bold;
+">
+
+<input
+type="checkbox"
+onclick="togglePass()"
+style="
+width:14px;
+height:14px;
+cursor:pointer;
+"
+>
+
+ดูรหัส
+
+</label>
+
+</div>
+
+<button onclick="login()" style="
+margin-top:10px;
+padding:10px 20px;
+border:none;
+border-radius:8px;
+background:#3b82f6;
+color:white;
+">LOGIN</button>
+
+<div id="loginErr" style="color:red;margin-top:8px;"></div>
+
+</div>
+
+<div id="app" style="display:none;">
+
+<div class="headerBar">
+   <div class="logo">
+    BACCARAT INTELLIGENCE
+    <img src="robocop.png" class="logoBot">
+</div>
+    <div class="tagline">STATE AWARE • DNA 8 • TREND ENGINE</div>
+
+</div>
+
+<div style="
+font-size:12px;
+opacity:.7;
+margin-top:4px;
+">
+
+</div>
+
+
+<div class="mainWrap">
+
+<div class="topGrid">
+    <div id="stateBox">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:18px;font-weight:bold;">
+             STATE AWARE AI
+        </div>
+        <div id="aiAccuracy" style="font-size:14px;">
+            Accuracy: 0%
+        </div>
+    </div>
+
+    <div style="margin-top:6px;font-size:16px;">
+        แนะนำ: <span id="aiBet" style="font-weight:bold;">-</span>
+        | Confidence: <span id="aiConf">0</span>%
+    </div>
+
+<div id="aiLog" style="
+    margin-top:8px;
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+"></div>
+
+<div id="aiAdvice" style="
+    margin-top:8px;
+    font-size:15px;
+    font-weight:bold;
+"></div>
+
+<!-- ✅ ย้ายมาไว้ตรงนี้ -->
+<div id="stateDNAStat" style="
+    margin-top:10px;
+    font-size:14px;
+    font-weight:bold;
+    text-align:left;
+"></div>
+
+</div> <!-- ✅ ปิด stateBox ตรงนี้ -->
+
+</div> <!-- ✅ ปิด topGrid ตรงนี้ -->
+
+<!-- 🔽 กล่องผู้ช่วย 50% ต้องอยู่หลัง topGrid -->
+<div id="assistant50">
+    🎯 ผู้ช่วยโหมด 50% แนะนำ: <span id="assistBet">-</span>
+</div>
+
+<div class="roadSection">
+
+
+<div>
+   <button class="btnP" onclick="add('P')">PLAYER</button>
+<button class="btnB" onclick="add('B')">BANKER</button>
+<button onclick="add('T')">TIE</button>
+<button onclick="undo()">UNDO</button>
+<button onclick="clearAll()">CLEAR</button>
+
+
+</div>
+
+
+
+<div id="info"></div>
+<div id="pattern" style="font-weight:bold;margin:6px;">Pattern: -</div>
+<div id="alert" class="alert">⚠ สายแจ้งเตือนเสียเปรียบ: -</div>
+
+
+
+<div class="beadContainer">
+
+  
+
+    <!-- BEAD -->
+    <h3 class="titleGlow">BEAD ROAD • MAIN</h3>
+    <canvas id="bead" class="mainCanvas" width="960" height="192"></canvas>
+
+</div>
+
+<h3>DNA 8 สาย</h3>
+<div class="dna" id="dna"></div>
+<script>
+/* ===== EXPIRY ===== */
+(function(){
+    const exp=new Date("2026-06-01T00:00:00+07:00");
+    if(new Date()>=exp){
+        expiredScreen.style.display="flex";
+        document.querySelector(".mainWrap").style.display = "none";
+        throw new Error("Expired");
+    }
+})();
+/* ===== ROAD ===== */
+const ROWS = 6,
+      COLS = 30,
+      CELL = 32;
+
+let history = [],
+    grid = [...Array(ROWS)].map(() => Array(COLS).fill(''));
+
+/* 👇 เพิ่ม Bead Road ตรงนี้ */
+const beadGrid = [...Array(ROWS)].map(() => Array(COLS).fill(''));
+
+let row = 0,
+    col = 0,
+    last = null;
+
+
+/* ===== RESET BIG ROAD ===== */
+function resetRoad(){
+    grid = [...Array(ROWS)].map(() => Array(COLS).fill(''));
+    row = 0;
+    col = 0;
+    last = null;
+}
+
+
+/* ===== RESET BEAD ROAD ===== */
+function resetBead(){
+    for(let r = 0; r < ROWS; r++){
+        for(let c = 0; c < COLS; c++){
+            beadGrid[r][c] = '';
+        }
+    }
+}
+
+/* 👇 วาง buildBead() ตรงนี้ */
+function buildBead(){
+
+    resetBead();
+
+    let r = 0;
+    let c = 0;
+
+    history.forEach(v => {
+
+        // 🔹 ถ้าคอลัมน์ล้นก่อนวางค่า
+        if(c >= COLS){
+            shiftBeadLeft();
+            c = COLS - 1;
+        }
+
+        beadGrid[r][c] = v;
+
+        r++;
+
+        if(r >= ROWS){
+            r = 0;
+            c++;
+        }
+
+    });
+}
+
+function shiftBeadLeft(){
+    for(let r=0;r<ROWS;r++){
+        for(let c=0;c<COLS-1;c++){
+            beadGrid[r][c] = beadGrid[r][c+1];
+        }
+        beadGrid[r][COLS-1] = '';
+    }
+}
+
+/* 👇 วาง drawBead() ตรงนี้ */
+function drawBead(){
+
+    const ctx = bead.getContext("2d");
+    ctx.clearRect(0,0,960,192);
+
+    for(let r=0;r<ROWS;r++){
+        for(let c=0;c<COLS;c++){
+
+            ctx.strokeStyle = "#333";
+            ctx.strokeRect(c*CELL, r*CELL, CELL, CELL);
+
+            let v = beadGrid[r][c];
+
+            if(v){
+
+                if(v === 'P') ctx.fillStyle = "#1e90ff";
+                else if(v === 'B') ctx.fillStyle = "#e74c3c";
+                else ctx.fillStyle = "#16a34a";
+
+                ctx.beginPath();
+                ctx.arc(c*CELL + CELL/2, r*CELL + CELL/2, 10, 0, Math.PI*2);
+                ctx.fill();
+            }
+        }
+    }
+}
+/* 👆 จบตรงนี้ */
+
+/* ฟังก์ชันอื่นในไฟล์จะตามหลัง */
+
+
+
+function add(v){
+
+    // 🔹 ถ้าเป็น T ให้ผ่านได้เสมอ
+    if(v !== 'T' && col >= COLS){
+        console.warn("Grid Full");
+        return;
+    }
+
+    history.push(v);
+
+    if(v==='P'||v==='B'){
+        addRoad(v);
+    }
+
+    updateUI();
+}
+
+function addRoad(v){
+
+    if(last === null){
+        row = 0;
+        col = 0;
+        grid[row][col] = v;
+        last = v;
+        return;
+    }
+
+    // 🔹 TIE ไม่สร้างช่องใหม่
+    if(v === 'T'){
+        return;
+    }
+
+    if(v === last){
+
+        // ลงแนวตั้ง
+        if(row + 1 < ROWS && grid[row+1][col] === ''){
+            row++;
+        }
+        else{
+            col++;
+
+            if(col >= COLS){
+                shiftLeft();
+                col = COLS - 1;
+            }
+        }
+    }
+    else{
+        // เปลี่ยนสี → คอลัมน์ใหม่ แถวบนสุด
+        col++;
+
+        if(col >= COLS){
+            shiftLeft();
+            col = COLS - 1;
+        }
+
+        row = 0;
+    }
+
+    grid[row][col] = v;
+    last = v;
+}
+
+
+
+function shiftLeft(){
+    for(let r=0;r<ROWS;r++){
+        for(let c=0;c<COLS-1;c++){
+            grid[r][c] = grid[r][c+1];
+        }
+        grid[r][COLS-1] = '';
+    }
+}
+
+
+function undo(){
+
+    if(history.length === 0) return;
+
+    history.pop();
+
+    // 🔥 RESET ทุกระบบก่อน
+    resetRoad();
+    resetBead();
+
+    aiHistory = [];
+    lastPrediction = null;
+    lastEvaluatedIndex = 0;
+
+    // 🔄 สร้างใหม่จาก history
+    history.forEach(h=>{
+        if(h==='P'||h==='B') addRoad(h);
+    });
+
+    rebuildAI();
+    updateUI();
+}
+
+/* ===== DNA 8 (rebuild ทุกครั้ง) ===== */
+const DNA=[
+ {seq:['P','B','B'],bet:'B'},
+ {seq:['B','P','B'],bet:'P'},
+ {seq:['P','B','P'],bet:'B'},
+ {seq:['B','B','P'],bet:'P'},
+ {seq:['P','P','B'],bet:'B'},
+ {seq:['B','B','B'],bet:'P'},
+ {seq:['P','P','P'],bet:'B'},
+ {seq:['B','P','P'],bet:'B'},
+
+
+];
+
+/* ===== STATE AWARE AI ===== */
+
+let aiHistory=[];
+let lastPrediction=null;
+let lastEvaluatedIndex = 0;
+
+function getPure(){
+    return history.filter(x => x === 'P' || x === 'B');
+}
+
+// ✅ วางตรงนี้
+function getCounts(){
+
+    let pure = [];
+    let p = 0;
+    let b = 0;
+
+    for(let v of history){
+        if(v === 'P'){
+            pure.push(v);
+            p++;
+        }
+        else if(v === 'B'){
+            pure.push(v);
+            b++;
+        }
+    }
+
+    return { pure, p, b };
+}
+
+
+function calcState(pure){
+
+    if(pure.length < 4) return null;
+
+    let last4 = pure.slice(-4);
+
+    let pCount = 0;
+    let bCount = 0;
+
+    for(let v of last4){
+        if(v === 'P') pCount++;
+        else bCount++;
+    }
+
+    let trendScore = Math.abs(pCount-bCount);
+    let chopScore = (last4[0]!==last4[1] && last4[1]!==last4[2])?1:0;
+
+    let bet = pCount>bCount?'P':'B';
+
+    let confidence = 50 + (trendScore*10) - (chopScore*5);
+    if (confidence > 85) confidence = 85;
+    if (confidence < 40) confidence = 40;
+
+    return {bet,confidence};
+}
+
+
+function updateAI(pure){
+
+    // 🔥 กัน error
+    if (!pure.length) return;
+
+    const state = calcState(pure);
+
+    if(!state){
+        aiBet.innerText='-';
+        aiConf.innerText='0';
+        return;
+    }
+
+    // ===== MAIN STATE =====
+    aiBet.innerText = state.bet;
+    aiConf.innerText = state.confidence;
+
+    // ===== Advice + Assistant =====
+    if(state.confidence === 50){
+
+        assistant50.style.display = "block";
+
+        let assist = state.bet === 'P' ? 'B' : 'P';
+        assistBet.innerText = assist;
+
+        aiAdvice.innerText = "เกิดค่า 50% ระบบไม่ชัดเจน เปิดโหมดผู้ช่วยตัดสินใจ";
+
+    }else{
+
+        assistant50.style.display = "none";
+
+        if(state.confidence >= 55){
+            aiAdvice.innerText = "ตานี้ควรเล่นตาม";
+        }
+        else if(state.confidence <= 45){
+            aiAdvice.innerText = "ตานี้ควรเล่นสวน";
+        }else{
+            aiAdvice.innerText = "";
+        }
+    }
+
+    // ===== Accuracy Track =====
+    if(pure.length > lastEvaluatedIndex){
+
+        let lastResult = pure.at(-1);
+
+        if(lastPrediction){
+            let correct = lastResult === lastPrediction;
+            aiHistory.push(correct);
+        }
+
+        lastEvaluatedIndex = pure.length;
+    }
+
+    renderAILog();
+    lastPrediction = state.bet;
+
+    // =====================================================
+    // 🔥🔥 STATE DNA PERFORMANCE (โชว์ด้านบน)
+    // =====================================================
+
+    let stateIndex = DNA.findIndex(d => d.seq === 'STATE');
+
+    if(stateIndex !== -1){
+
+        let statelogs = [];
+
+        // 🔄 สร้าง log เฉพาะ STATE
+        for(let i=3;i<pure.length;i++){
+
+            let result = pure[i];
+            let st = calcState(pure.slice(0,i));
+        }
+}
+    
+// ===== STATE DNA PERFORMANCE (ด้านบน) =====
+let logs = [];
+
+for(let i=3;i<pure.length;i++){
+    let result = pure[i];
+    let st = calcState(pure.slice(0,i));
+
+    if(st){
+        logs.push(result === st.bet ? '✔' : '✖');
+    }
+}
+
+
+let win = logs.filter(x => x === '✔').length;
+let lose = logs.filter(x => x === '✖').length;
+let total = win + lose;
+
+let pct = total ? ((win / total) * 100).toFixed(1) : 0;
+
+// 👉 แสดงด้านบน
+stateDNAStat.innerText = `📊 STATE DNA: ${pct}% (${win}/${total})`;
+
+// 🎨 สีอัตโนมัติ
+if(pct >= 60){
+    stateDNAStat.style.color = "#22c55e";
+}else if(pct >= 50){
+    stateDNAStat.style.color = "#facc15";
+}else{
+    stateDNAStat.style.color = "#ef4444";
+}
+
+    
+}
+
+
+function renderAILog(){
+    aiLog.innerHTML='';
+    let win=aiHistory.filter(x=>x).length;
+    let total=aiHistory.length;
+    let acc= total?((win/total)*100).toFixed(1):0;
+
+    aiAccuracy.innerText=`Accuracy: ${acc}%`;
+
+    aiHistory.slice(-25).forEach(r=>{
+        let div=document.createElement("div");
+        div.className=r?'aiWin':'aiLose';
+        div.innerText=r?'✔':'✖';
+        aiLog.appendChild(div);
+    });
+}
+
+
+/* ===== 🔥 วางตรงนี้เลย ===== */
+function rebuildAI(){
+
+    aiHistory = [];
+    lastPrediction = null;
+    lastEvaluatedIndex = 0;
+
+    const pure = getPure();
+
+    for(let i = 0; i < pure.length; i++){
+
+        const slice = pure.slice(0, i + 1);
+        const state = calcState(slice);
+
+        if(!state) continue;
+
+        if(lastPrediction !== null){
+            const correct = pure[i] === lastPrediction;
+            aiHistory.push(correct);
+        }
+
+        lastPrediction = state.bet;
+        lastEvaluatedIndex = i + 1;
+    }
+
+    renderAILog();   // 🔥 เพิ่มบรรทัดนี้
+}
+
+
+function calcDNA8(){
+
+    let pure = getPure();
+
+    let logs = Array.from({length:DNA.length},()=>[]);
+    let alertHit = false;
+    let maxPct = 0;
+    let html = '';
+
+    // 🔥 เก็บ state ล่าสุดครั้งเดียว (กันแกว่ง)
+    const currentState = calcState(pure);
+
+    // ===== เก็บผลลัพธ์ก่อน =====
+    for(let i=3;i<pure.length;i++){
+
+        const prev = pure.slice(i-3,i);
+        const result = pure[i];
+
+        DNA.forEach((d,idx)=>{
+
+            // 🔥 STATE AI
+            if(d.seq === 'STATE'){
+
+                const state = calcState(pure.slice(0,i));
+
+                if(state){
+                    logs[idx].push(result === state.bet ? '✔' : '✖');
+                }
+
+                return;
+            }
+
+            // 🔹 DNA ปกติ
+            if(JSON.stringify(prev) === JSON.stringify(d.seq)){
+                logs[idx].push(result === d.bet ? '✔' : '✖');
+            }
+
+        });
+    }
+
+    // ===== คำนวณ maxPct ก่อน =====
+let pctArr = [];
+
+logs.forEach((arr,i)=>{
+
+    const win = arr.filter(x => x === '✔').length;
+    const lose = arr.filter(x => x === '✖').length;
+
+    const pct = (win + lose) ? (win / (win + lose)) * 100 : 0;
+
+    pctArr[i] = pct;
+
+    if(lose >= 3 && lose > win) alertHit = true;
+
+    maxPct = Math.max(maxPct, pct);
+});
+
+// ===== render HTML =====
+logs.forEach((arr,i)=>{
+
+    const pct = pctArr[i];
+    const pctText = pct.toFixed(1);
+
+    // 🔥 แยกชื่อ
+    let name = DNA[i].seq === 'STATE'
+        ? 'STATE AI'
+        : `Ai: ${i+1}`;
+
+    // 🔥 แยก bet
+    let betText;
+    if(DNA[i].seq === 'STATE'){
+        betText = currentState ? currentState.bet : '-';
+    }else{
+        betText = DNA[i].bet;
+    }
+
+    // 🔥 confidence (เฉพาะ STATE)
+    let confText = '';
+    if(DNA[i].seq === 'STATE' && currentState){
+        confText = ` (${currentState.confidence}%)`;
+    }
+
+    html += `<div class="dna-row ${pct === maxPct ? 'best' : ''}">
+        <div class="dna-head">
+            <div>${name} | แทง ${betText}${confText}</div>
+            <div>${pctText}%</div>
+        </div>
+
+        <div class="dna-marks">`;
+
+    arr.forEach(m=>{
+        html += `<div class="mark ${m==='✔'?'win':'lose'}">${m}</div>`;
+    });
+
+    html += `</div></div>`;
+});
+
+// ===== inject =====
+dna.innerHTML = html;
+
+// ===== alert =====
+alert.innerText = alertHit
+    ? "⚠ พบสายเค้าเสียเปรียบ (แพ้สะสม)"
+    : "⚠ สายแจ้งเตือนเสียเปรียบ: -";
+
+}
+
+/* ===== DRAW ===== */
+function draw(){
+    const c=road.getContext("2d");
+    c.clearRect(0,0,960,192);
+    for(let r=0;r<ROWS;r++){
+        for(let k=0;k<COLS;k++){
+            c.strokeStyle="#333";
+            c.strokeRect(k*CELL,r*CELL,CELL,CELL);
+            let v=grid[r][k];
+            if(v){
+                c.fillStyle=v==='B'?"#e74c3c":"#1e90ff";
+                c.beginPath();
+                c.arc(k*CELL+CELL/2,r*CELL+CELL/2,10,0,Math.PI*2);
+                c.fill();
+            }
+        }
+    }
+}
+
+
+function updateUI(){
+
+    const counts = getCounts();
+    const { pure, p, b } = counts;
+
+    const t = history.length - pure.length;
+
+    info.innerText=`P=${p}
+B=${b}
+T=${t}
+Total=${history.length}`;
+
+    pattern.innerText=
+        history.length<2?"Pattern:-":
+        history.at(-1)===history.at(-2)
+        ?"A = แทงตาม":"B = แทงสวน";
+
+    calcDNA8();
+    //draw();
+
+    /* 👇 เพิ่มตรงนี้ */
+    buildBead();
+    drawBead();
+    /* 👆 จบตรงนี้ */
+
+    updateAI(pure);
+}
+
+function clearAll(){
+
+    history = [];
+
+    resetRoad();
+    resetBead();
+
+    aiHistory = [];
+    lastPrediction = null;
+    lastEvaluatedIndex = 0;
+
+    aiAccuracy.innerText = "Accuracy: 0%";
+    aiLog.innerHTML = "";
+    aiBet.innerText = "-";
+    aiConf.innerText = "0";
+    aiAdvice.innerText = "";
+
+    info.innerText = "";
+    pattern.innerText = "Pattern: -";
+    alert.innerText = "⚠ สายแจ้งเตือนเสียเปรียบ: -";
+
+    // ❌ ลบทิ้ง (ถ้าไม่มี element)
+    // labOutput.innerText = "";
+
+    // 🔥 เพิ่ม 2 บรรทัดนี้
+    buildBead();
+    drawBead();
+
+    updateUI();
+}
+
+
+/* ===== LOGIN (API VERSION) ===== */
+async function login(){
+
+  const userInput = document.getElementById("user");
+  const passInput = document.getElementById("pass");
+
+  const loginBoxEl = document.getElementById("loginBox");
+  const appEl = document.getElementById("app");
+  const loginErrEl = document.getElementById("loginErr");
+
+  loginErrEl.textContent="กำลังตรวจสอบ...";
+
+  try{
+
+    const res = await fetch(
+      "https://morning-block-55bb.havanalanna.workers.dev/?user="
+      + encodeURIComponent(userInput.value)
+      + "&pass=" + encodeURIComponent(passInput.value)
+    );
+
+    const data = await res.json();
+
+    if(data.status==="ok"){
+
+      loginBoxEl.style.display="none";
+      appEl.style.display="block";
+
+      updateUI();
+
+      /* 🔒 ตรวจ License ทุก 30 วิ */
+      const user = userInput.value;
+      const pass = passInput.value;
+
+      setInterval(async ()=>{
+
+        try{
+
+          const r = await fetch(
+            "https://morning-block-55bb.havanalanna.workers.dev/?user="
+            + encodeURIComponent(user)
+            + "&pass=" + encodeURIComponent(pass)
+          );
+
+          const j = await r.json();
+
+          if(j.status!=="ok"){
+
+            alert("⛔ License ถูกปิดใช้งาน");
+
+            location.reload();
+          }
+
+        }catch(e){
+
+          console.log("License check error");
+
+        }
+
+      },30000);
+
+    }else{
+
+      loginErrEl.textContent =
+      "❌ Username หรือ Password ไม่ถูกต้อง";
+
+    }
+
+  }catch(e){
+
+    loginErrEl.textContent =
+    "❌ ไม่สามารถเชื่อมต่อ License Server";
+
+  }
+}
+
+/* ❗ อันนี้ต้องอยู่ล่างสุดเสมอ */
+//updateUI();
+
+function togglePass(){
+
+    const passInput =
+    document.getElementById("pass");
+
+    if(passInput.type === "password"){
+        passInput.type = "text";
+    }else{
+        passInput.type = "password";
+    }
+}
+
+
+
+</script>
+
+</div>
+
+</body>
+</html>
