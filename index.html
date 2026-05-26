@@ -797,6 +797,63 @@ body::after{
     display:inline-block;
 }
 
+/* ===== EXPIRE PREMIUM ===== */
+.expireBox{
+    width:fit-content;
+    margin:14px auto 20px auto;
+
+    padding:14px 30px;
+
+    font-size:16px;
+    font-weight:800;
+    letter-spacing:1px;
+
+    color:#FFD700;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(180deg,
+        rgba(255,215,0,.12),
+        rgba(255,215,0,.04));
+
+    border:1px solid rgba(255,215,0,.45);
+
+    box-shadow:
+        0 0 20px rgba(255,215,0,.25),
+        0 0 50px rgba(255,215,0,.12),
+        inset 0 0 12px rgba(255,255,255,.05);
+
+    text-shadow:
+        0 0 10px rgba(255,215,0,.8),
+        0 0 20px rgba(255,215,0,.35);
+
+    animation: expirePulse 2.5s ease-in-out infinite;
+}
+
+/* 🔥 เรืองแสง */
+@keyframes expirePulse{
+    0%{
+        transform:scale(1);
+        box-shadow:
+            0 0 20px rgba(255,215,0,.25),
+            0 0 50px rgba(255,215,0,.12);
+    }
+
+    50%{
+        transform:scale(1.03);
+        box-shadow:
+            0 0 35px rgba(255,215,0,.45),
+            0 0 80px rgba(255,215,0,.2);
+    }
+
+    100%{
+        transform:scale(1);
+        box-shadow:
+            0 0 20px rgba(255,215,0,.25),
+            0 0 50px rgba(255,215,0,.12);
+    }
+}
 </style>
 </head>
 
@@ -894,14 +951,8 @@ color:white;
     <div class="tagline">STATE AWARE • DNA 8 • TREND ENGINE</div>
 
 </div>
-<div style="
-font-size:12px;
-opacity:.7;
-margin-top:4px;
-color:#FFD700;
-letter-spacing:1px;
-">
-⏳ วันหมดอายุ : 27 พฤษภาคม พ.ศ. 2569
+<div class="expireBox">
+    ⏳ วันหมดอายุ : 27 พฤษภาคม พ.ศ. 2569
 </div>
 
 
