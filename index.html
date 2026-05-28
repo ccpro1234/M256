@@ -549,10 +549,11 @@ body::after{
     transform:translateX(-100%);
 }
 
-.btnP:hover::after,
-.btnB:hover::after{
-    animation: shine 1s;
+.btnP::after,
+.btnB::after{
+    display:none;
 }
+
 
 @keyframes shine{
     100%{transform:translateX(100%);}
@@ -799,6 +800,8 @@ body::after{
 
 /* ===== EXPIRE PREMIUM ===== */
 .expireBox{
+    display:none;
+
     width:fit-content;
     margin:14px auto 20px auto;
 
@@ -948,13 +951,9 @@ color:white;
     BACCARAT INTELLIGENCE
     <img src="robocop.png" class="logoBot">
 </div>
-    <div class="tagline">STATE AWARE • DNA 8 • TREND ENGINE</div>
+  <div class="tagline">STATE AWARE • DNA 8 • TREND ENGINE</div>
 
 </div>
-<div class="expireBox">
-    ⏳ วันหมดอายุ : 27 พฤษภาคม พ.ศ. 2569
-</div>
-
 
 <div class="mainWrap">
 
@@ -1041,7 +1040,7 @@ color:white;
 <script>
 /* ===== EXPIRY ===== */
 (function(){
-    const exp=new Date("2026-05-27T00:00:00+07:00");
+    const exp=new Date("2026-06-30T00:00:00+07:00");
     if(new Date()>=exp){
         expiredScreen.style.display="flex";
         document.querySelector(".mainWrap").style.display = "none";
